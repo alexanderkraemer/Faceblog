@@ -1,5 +1,5 @@
 Faceblog
-Create BLogs and share them with your friends.
+Create Blogs and share them with your friends.
 Like the blogs of your friends and let them like yours
 
 Install:
