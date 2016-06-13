@@ -9,3 +9,4 @@ Import the structure.sql File to the Database and you're done!
 To test your Blog you can import the testdata.sql file to your Database too.
 It creates 100 users and 100 Blogentries.
 
+Try the faceblog under: http://faceblog.alexanderkraemer.com/
