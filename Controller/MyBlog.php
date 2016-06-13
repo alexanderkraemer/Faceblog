@@ -12,6 +12,8 @@
             $blogposts = BlogPost::where ( 'user_id = ? order by created_at desc',
                                            [ Auth::user ()->id ] );
 
+            $blog_creator = Auth::user ()->id;
+
             foreach ( $blogposts as $post )
             {
                 // get Likes and generate String to return
@@ -26,14 +28,15 @@
                 // create String to return
                 $post->likestring = implode ( ', ', $userArr );
             }
-
-            $this->page->view ( 'blog/list', compact ( 'blogposts' ) );
+            $this->page->view ( 'blog/list', compact ( 'blogposts', 'blog_creator' ) );
         }
 
         public function show ( $id )
         {
-            $blogposts = BlogPost::where ( 'user_id = ? order by created_at desc',
-                                           [ $id ] );
+            $blogposts = BlogPost::where ( 'user_id = ? order by created_at desc', [ $id ] );
+
+            // user_id of the creator of the blogentries
+            $blog_creator = $id;
 
             foreach ( $blogposts as $post )
             {
@@ -50,17 +53,14 @@
                 $post->likestring = implode ( ', ', $userArr );
             }
 
-            $this->page->view ( 'blog/userlist', compact ( 'blogposts' ) );
+            $this->page->view ( 'blog/list', compact ( 'blogposts', 'blog_creator' ) );
         }
 
         public function edit ( $id )
         {
             // redirect if user isn't creator of this blogpost
-            if ( !BlogPost::findOrFailWhere ( 'id = ? AND user_id = ?', [
-                $id,
-                Auth::user ()->id
-            ] )
-            )
+            if ( !BlogPost::findOrFailWhere ( 'id = ? AND user_id = ?',
+                                              [ $id, Auth::user ()->id ] ) )
             {
                 Tools::redirect ( '/myblog' );
             }
@@ -69,14 +69,19 @@
             if ( !empty($_POST) )
             {
                 $errorArr = $this->checkValid ( $_POST );
-
-                $post          = BlogPost::find ( $id );
-                $post->title   = $_POST[ 'title' ];
-                $post->content = $_POST[ 'content' ];
-                $post->user_id = Auth::user ()->id;
-                $post->update ();
-
-                Tools::redirect ( '/myblog' );
+                if(empty($errorArr))
+                {
+                    $post          = BlogPost::find ( $id );
+                    $post->title   = Tools::prepare ( $_POST[ 'title' ] );
+                    $post->content = Tools::prepare ( $_POST[ 'content' ] );
+                    $post->user_id = Auth::user ()->id;
+                    $post->update ();
+                    Tools::redirect ( '/myblog' );
+                }
+                else
+                {
+                    $this->page->view ( 'blog/edit', compact ( 'blogpost', 'errorArr' ) );
+                }
             }
 
             $blogpost = BlogPost::find ( $id );
@@ -101,19 +106,16 @@
             Tools::redirect ( '/myblog' );
         }
 
-        public function like ( $postid, $user_id )
+        public function like ( $postid )
         {
+            $blogpost = BlogPost::find($postid);
             if ( Like::exists ( $postid ) )
             {
-                $like = Like::where ( 'user_id = ? AND post_id = ?', [
-                    Auth::user ()->id,
-                    $postid
-                ] )[ 0 ];
-                $like->delete ( ' user_id = ? AND post_id = ?', [
-                    Auth::user ()->id,
-                    $postid
-                ] );
-                Tools::redirect ( '/myblog/' . $user_id );
+                $like = Like::where ( 'user_id = ? AND post_id = ?',
+                                      [ Auth::user ()->id, $postid ] )[ 0 ];
+                $like->delete ( ' user_id = ? AND post_id = ?',
+                                [ Auth::user ()->id, $postid ] );
+                Tools::redirect ( '/myblog/' . $blogpost->user_id );
             }
             else
             {
@@ -123,7 +125,7 @@
                 $like->save ();
 
 
-                Tools::redirect ( '/myblog/' . $user_id );
+                Tools::redirect ( '/myblog/' . $blogpost->user_id );
             }
         }
 
@@ -134,15 +136,23 @@
             {
                 $errorArr = $this->checkValid ( $_POST );
 
-                $post          = new BlogPost();
-                $post->title   = Tools::prepare ( $_POST[ 'title' ] );
-                $post->content = Tools::prepare ( $_POST[ 'content' ] );
-                $post->user_id = Auth::user ()->id;
-                // current time as timestamp for new blogposts
-                $post->created_at = date ( 'y-m-d H:i:s' );
-                $post->save ();
+                if(empty($errorArr))
+                {
+                    $post          = new BlogPost();
+                    $post->title   = Tools::prepare ( $_POST[ 'title' ] );
+                    $post->content = Tools::prepare ( $_POST[ 'content' ] );
+                    $post->user_id = Auth::user ()->id;
+                    // current time as timestamp for new blogposts
+                    $post->created_at = date ( 'y-m-d H:i:s' );
+                    $post->save ();
 
-                Tools::redirect ( '/myblog' );
+                    Tools::redirect ( '/myblog' );
+                }
+                else
+                {
+                    $this->page->view ( 'blog/create', compact ( 'errorArr' ) );
+                }
+
             }
             $this->page->view ( 'blog/create', compact ( 'errorArr' ) );
         }

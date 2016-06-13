@@ -9,7 +9,9 @@
 
         public function index ()
         {
+            // $users = User::where('order by created_at desc');
             $users = User::all ();
+
             $this->page->view ( 'people/list', compact ( 'users' ) );
         }
 

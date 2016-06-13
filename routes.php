@@ -19,7 +19,6 @@
         $route->add( '/myblog/create', 'MyBlog@create');
         $route->add( '/myblog/{id}/edit', 'MyBlog@edit');
         $route->add( '/myblog/{id}/delete', 'MyBlog@delete');
-        $route->add( '/myblog/{postid}/like/user/{userid}', 'MyBlog@like');
         $route->add( '/myblog/{postid}/like', 'MyBlog@like');
 
 

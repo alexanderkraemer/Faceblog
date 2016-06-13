@@ -16,15 +16,17 @@
                 if ( empty($errorArr) )
                 {
                     $user             = new User();
-                    $user->name       = $_POST[ 'username' ];
-                    $user->first_name = $_POST[ 'last_name' ];
-                    $user->last_name  = $_POST[ 'last_name' ];
-                    $user->email      = $_POST[ 'email' ];
+                    $user->name       = Tools::prepare( $_POST[ 'username' ] );
+                    $user->first_name = Tools::prepare( $_POST[ 'first_name' ] );
+                    $user->last_name  = Tools::prepare( $_POST[ 'last_name' ] );
+                    $user->email      = Tools::prepare( $_POST[ 'email' ] );
                     $user->password   = Tools::bcrypt ( $_POST[ 'password' ] );
                     $userId           = $user->save ();
-                    echo $user->password;
+
+                    // save user_id to session
                     $_SESSION[ 'user_id' ] = $userId;
 
+                    // redirect to home-page
                     Tools::redirect ( '/' );
                 }
                 else

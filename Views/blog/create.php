@@ -16,7 +16,7 @@
                             <label for="first_name" class="col-md-4 control-label">Content</label>
 
                             <div class="col-md-6">
-                                <textarea id="content" class="form-control"
+                                <textarea id="content" cols="10" rows="15" class="form-control"
                                        name="content"><?php echo Input::old('content'); ?></textarea>
                             </div>
                         </div>

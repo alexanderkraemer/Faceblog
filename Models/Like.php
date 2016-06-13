@@ -16,11 +16,8 @@
 
         public static function exists ( $postid )
         {
-            if ( self::countWhere ( 'post_id = ? and user_id = ?', [
-                $postid,
-                Auth::user ()->id
-            ] )
-            )
+            if ( self::countWhere ( 'post_id = ? and user_id = ?',
+                                    [ $postid, Auth::user ()->id ] ) )
             {
                 return true;
             }

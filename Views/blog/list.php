@@ -1,6 +1,13 @@
 <div class="container">
-    <h4><a href="<?php echo DIR; ?>/myblog/create"><span class="glyphicon glyphicon-plus"></span></a></h4>
     <?php
+        if( Auth::user()->id === $blog_creator)
+        {
+            ?>
+            <h4><a href="<?php echo DIR; ?>/myblog/create"><span
+                        class="glyphicon glyphicon-plus"></span></a></h4>
+            <?php
+        }
+
         if(empty($blogposts))
         {
             ?>
@@ -32,7 +39,7 @@
                         ?>
                         <?php echo $post->title; ?>
                         <small class="pull-right">
-                            <?php echo Tools::dateTime($post->created_at); ?>
+                            created on <?php echo Tools::dateTime($post->created_at); ?>
                         </small>
                     </h3>
                 </div>

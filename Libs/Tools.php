@@ -33,22 +33,21 @@
             else
             {
                 $months = [
-                    '01' => 'Januar',
-                    '02' => 'Februar',
-                    '03' => 'März',
+                    '01' => 'January',
+                    '02' => 'February',
+                    '03' => 'March',
                     '04' => 'April',
-                    '05' => 'Mai',
-                    '06' => 'Juni',
-                    '07' => 'Juli',
+                    '05' => 'May',
+                    '06' => 'June',
+                    '07' => 'July',
                     '08' => 'August',
                     '09' => 'September',
-                    '10' => 'Oktober',
+                    '10' => 'October',
                     '11' => 'November',
-                    '12' => 'Dezember'
+                    '12' => 'December'
                 ];
 
-                return strftime ( "%d. " . $months[ explode ( '-',
-                                                              $timestamp )[ 1 ] ]
+                return strftime ( "%d. " . $months[ explode ( '-', $timestamp )[ 1 ] ]
                                   . " %Y", strtotime ( $timestamp ) );
             }
         }
@@ -70,18 +69,18 @@
             }
 
             $months = [
-                '01' => 'Januar',
-                '02' => 'Februar',
-                '03' => 'März',
+                '01' => 'January',
+                '02' => 'February',
+                '03' => 'March',
                 '04' => 'April',
-                '05' => 'Mai',
-                '06' => 'Juni',
-                '07' => 'Juli',
+                '05' => 'May',
+                '06' => 'June',
+                '07' => 'July',
                 '08' => 'August',
                 '09' => 'September',
-                '10' => 'Oktober',
+                '10' => 'October',
                 '11' => 'November',
-                '12' => 'Dezember'
+                '12' => 'December'
             ];
 
             return strftime ( "%d. " . $months[ explode ( '-', $timestamp )[ 1 ] ]

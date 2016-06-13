@@ -18,7 +18,7 @@
             ?>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Keine User verfügbar!</h3>
+                    <h3 class="panel-title">Keine User gefunden!</h3>
                 </div>
             </div>
             <?php
@@ -37,19 +37,19 @@
                         <div class="col-md-8">
                             <div class="block form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Username:</label>
+                                    <label class="col-md-3 control-label">Username:</label>
                                     <div class="col-md-5">
                                         <p class="form-control-static"><?php echo $user->name; ?></p>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">E-Mail:</label>
+                                    <label class="col-md-3 control-label">E-Mail:</label>
                                     <div class="col-md-5">
                                         <p class="form-control-static"><?php echo $user->email; ?></p>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">Mitglied seit:</label>
+                                    <label class="col-md-3 control-label">Mitglied seit:</label>
                                     <div class="col-md-5">
                                         <p class="form-control-static"><?php echo Tools::date($user->created_at); ?></p>
                                     </div>

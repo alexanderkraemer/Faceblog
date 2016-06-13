@@ -27,8 +27,8 @@
             $usernameEntered = $post[ 'username' ];
             $passwordEntered = $post[ 'password' ];
             
-            // return false if user not found, and object of user, if found
-            if ( $user = User::findOrFailWhere ( 'name = ?', [ $usernametered ] ) )
+            // return false if user not found, and return object of user, if found
+            if ( $user = User::findOrFailWhere ( 'name = ?', [ $usernameEntered ] ) )
             {
                 if ( password_verify ( $passwordEntered, $user->password ) )
                 {
@@ -37,7 +37,6 @@
                 
                 return false;
             }
-            
             return false;
         }
     }

@@ -15,7 +15,6 @@
             {
                 self::$primarykey = $class::$primaryKey;
             }
-
         }
 
         // finds row by id
@@ -29,7 +28,7 @@
             $stmt = $database->conn->prepare ( $sql );
             $stmt->execute ( [ $id ] );
 
-            return $stmt->fetchObject ( 'BlogPost' );
+            return $stmt->fetchObject ( $class );
         }
 
         // either finds row by PK, or return false (detailed query
@@ -40,7 +39,7 @@
 
             if ( !empty($query) )
             {
-                $query = " WHERE " . $query;
+                $query = ' WHERE ' . $query;
             }
 
             $sql = 'SELECT * FROM ' . $class::$table . $query;
